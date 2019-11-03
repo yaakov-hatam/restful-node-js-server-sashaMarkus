@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta carrier="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <form novalidate>
+        <label>age: <input carrier="age" placeholder="age"></label>
+        <label>carrier: <input carrier="carrier" placeholder="carrier"></label>
+        <label>id: <input carrier="id" placeholder="id"></label>
+        <button id='add'>Add</button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Phone age</th>
+                <th>Phone carrier</th>
+                <th>Phone id</th>
+                <th>Phone name</th>
+                <th>Phone image</th>
+                <th>Phone snipped</th>
+            </tr>
+        </thead>
+        <tbody id='phones'>
+
+        </tbody>
+    </table>
+    <script>
+        const phoneEndpoint = '/phone';
+        document.getElementById('add').addEventListener('click', function (e) {
+            e.preventDefault();
+            const phone = {
+                age: this.form.age.value,
+                carrier: this.form.carrier.value,
+                id: this.form.id.value
+            };
+            fetch(PhoneEndpoint, {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' }, // this line is important, if this content-type is not set it wont work
+                body: JSON.stringify(phone)
+            }).then(responseData => {
+                console.log(responseData);
+            }).catch(err => {
+                alert('not inserted')
+            });
+        })
+        fetch(phoneEndpoint).then(phoneData => {
+            phoneData.json().then(phoneTableView);
+        })
+        function phoneTableView(phones) {
+            let html = '';
+            for (let i = 0; i < phones.length; i++) {
+                html += `<tr>
+                    <td>${phones[i].age}</td>
+                    <td>${phones[i].carrier}</td>
+                    <td>${phones[i].id}</td>
+                    <td>${phones[i].name}</td>
+                    <td><img src='http://angular.github.io/angular-phonecat/step-14/app/${phones[i].imageUrl}'></td>
+                    <td>${phones[i].snippet}</td>
+                </tr>`
+            }
+            document.getElementById('phones').innerHTML = html;
+        }
+    </script>
+</body>
+
+</html>
