@@ -1,12 +1,28 @@
+const mysql = require('mysql');
+
 const fs = require('fs');
-const fileName = 'C:\\Users\\Jbt\\Desktop\\New folder (4)\\restful-node-js-server-sashaMarkus\\phones\\phones.json';
+
+
+const _con = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "phones"
+})
 
 function readOne(age, callback) {
 
 }
 
-function readAll(callback) {
-    fs.readFile(fileName, (e, data) => {
+function readAll(sql, callback) {
+    _con.query(sql, function(err, result){
+        if(err){
+            callback(err);
+        }else {
+            callback(null, result);
+        }
+    })
+    /*fs.readFile(fileName, (e, data) => {
         const allPhones = data && data.length > 0 ? JSON.parse(data.toString()) : [];
         allPhones.sort(function (a, b) {
             return a.age - b.age;
@@ -16,7 +32,7 @@ function readAll(callback) {
         } else {
             callback(null, allPhones);
         }
-    })
+    })*/
 }
 
 function saveOne(addedPhone, callback) {

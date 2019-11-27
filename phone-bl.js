@@ -1,5 +1,7 @@
 const dal = require('./dal-phone');
 
+
+//const fileName = 'C:\\Users\\Jbt\\Desktop\\New folder (4)\\restful-node-js-server-sashaMarkus\\phones\\phones.json';
 function getPhone(age, callback) {
     callback(null, { "age": age, "name": "abc", "km": 42 });
     /*
@@ -9,9 +11,10 @@ function getPhone(age, callback) {
 }
 
 function getAllPhones(callback) {
-    dal.readAll((e, allPhones) => {
-        if (e) {
-            callback(e);
+    const query = 'SELECT * FROM phonesapp';
+    dal.readAll(query, (err, allPhones) => {
+        if (err) {
+            callback(err);
         } else {
             callback(null, allPhones);
         }

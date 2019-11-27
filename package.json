@@ -19,6 +19,8 @@
   "homepage": "https://github.com/yaakov-hatam/restful-node-js-server-sashaMarkus#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "mysql": "^2.17.1",
     "nodemon": "^1.19.4"
-  }
+  },
+  "devDependencies": {}
 }
